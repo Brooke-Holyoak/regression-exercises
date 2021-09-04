@@ -32,22 +32,23 @@ def new_zillow_data():
     return df
 
 
-def get_telco_data():
+def get_zillow_data():
     '''
     This function reads in telco data from Codeup database, writes data to
     a csv file if a local file does not exist, and returns a df.
     '''
-    if os.path.isfile('telco_churn_df.csv'):
+    if os.path.isfile('zillow_df.csv'):
         
         # If csv file exists read in data from csv file.
-        df = pd.read_csv('telco_churn_df.csv', index_col=0)
+        df = pd.read_csv('zillow_df.csv', index_col=0)
         
     else:
         
         # Read fresh data from db into a DataFrame
-        df = new_telco_data()
+        df = new_zillow_data()
         
         # Cache data
-        df.to_csv('telco_churn_df.csv')
+        df.to_csv('zillow_df.csv')
         
     return df
+
