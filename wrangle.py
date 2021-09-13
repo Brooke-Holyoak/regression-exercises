@@ -21,11 +21,20 @@ def new_zillow_data():
     '''
     This function reads the telco data from the Codeup db into a df.
     '''
-    sql_query = """
-                SELECT bedroomcnt, bathroomcnt, calculatedfinishedsquarefeet, taxvaluedollarcnt, yearbuilt, taxamount, fips
+    #sql_query = """
+    #            SELECT bedroomcnt, bathroomcnt, calculatedfinishedsquarefeet, taxvaluedollarcnt, #yearbuilt, taxamount, fips
+    #            FROM properties_2017
+    #            WHERE propertylandusetypeid = "261";
+    #            """
+     sql_query = """
+                 SELECT parcelid, airconditioningtypeid, architecturalstyletypeid, basementsqft, bathroomcnt, bedroomcnt, calculatedfinishedsquarefeet, fips, fireplacecnt, garagecarcnt, hashottuborspa, poolcnt, propertylandusetypeid, regionidneighborhood, storytypeid, typeconstructiontypeid, unitcnt, yearbuilt, numberofstories, taxamount, taxvaluedollarcnt
                 FROM properties_2017
-                WHERE propertylandusetypeid = "261";
+                JOIN predictions_2017 USING(parcelid)
+                WHERE propertylandusetypeid IN ('261', '264', '273', '276')
+                AND transactiondate BETWEEN '2017-05-01' AND '2017-08-31';
                 """
+    
+    
     
     # Read in DataFrame from Codeup db.
     df = pd.read_sql(sql_query, get_connection('zillow'))
